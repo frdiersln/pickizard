@@ -9,8 +9,14 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        primary: 'var(--primary)',
+        secondary: 'var(--secondary)',
+        background: 'var(--background)',
+        'background-secondary': 'var(--background-secondary)',
+      },
+      fontFamily: {
+        'kumar-one': ['var(--font-kumar-one)'],
+        'lora': ['var(--font-lora)'],
       },
     },
   },
