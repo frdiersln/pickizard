@@ -80,7 +80,7 @@ export function ListDisplay({ items, onRemoveItem }: ListDisplayProps) {
                 <div className="absolute inset-x-0 bottom-0 max-w-[60%] w-fit h-fit mx-auto bg-background-secondary rounded-t-xl px-4">
                   <div className="relative flex justify-center">
                     <h3 
-                      className="text-primary text-center text-4xl max-w-full truncate"
+                      className="text-primary text-center text-2xl max-w-full truncate"
                       onMouseEnter={() => setActiveTooltip(item.id)}
                       onMouseLeave={() => setActiveTooltip(null)}
                       onTouchStart={(e) => {
