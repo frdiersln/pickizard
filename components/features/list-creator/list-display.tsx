@@ -4,12 +4,6 @@ import { X, ListPlus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Slider } from "@/components/ui/slider";
 import { Card, CardContent } from '@/components/ui/card';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { ListItem } from '@/types';
 
 interface ListDisplayProps {
@@ -19,6 +13,7 @@ interface ListDisplayProps {
 
 export function ListDisplay({ items, onRemoveItem }: ListDisplayProps) {
   const [size, setSize] = useState(3);
+  const [activeTooltip, setActiveTooltip] = useState<string | null>(null);
 
   if (items.length === 0) {
     return (
@@ -83,18 +78,45 @@ export function ListDisplay({ items, onRemoveItem }: ListDisplayProps) {
                 </div>
 
                 <div className="absolute inset-x-0 bottom-0 max-w-[60%] w-fit h-fit mx-auto bg-background-secondary rounded-t-xl px-4">
-                  <TooltipProvider delayDuration={0}>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <h3 className="text-primary text-center text-4xl max-w-full truncate">
+                  <div className="relative flex justify-center">
+                    <h3 
+                      className="text-primary text-center text-4xl max-w-full truncate"
+                      onMouseEnter={() => setActiveTooltip(item.id)}
+                      onMouseLeave={() => setActiveTooltip(null)}
+                      onTouchStart={(e) => {
+                        e.preventDefault(); // Prevent double-tap zoom on mobile
+                        if (activeTooltip === item.id) {
+                          setActiveTooltip(null);
+                        } else {
+                          setActiveTooltip(item.id);
+                        }
+                      }}
+                    >
+                      {item.name}
+                    </h3>
+                    
+                    {/* Custom Tooltip */}
+                    <AnimatePresence>
+                      {activeTooltip === item.id && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 5 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: 5 }}
+                          className="absolute z-50 bottom-full -translate-x-1/2 mb-2 px-3 py-1.5 rounded-md bg-popover text-popover-foreground text-sm shadow-md min-w-fit w-auto"
+                          style={{
+                            width: 'max-content',
+                            maxWidth: '200px',
+                            textAlign: 'center'
+                          }}
+                        >
                           {item.name}
-                        </h3>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p className="text-sm whitespace-normal">{item.name}</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
+                          <div 
+                            className="absolute w-2 h-2 bg-popover transform rotate-45 left-1/2 -translate-x-1/2 -bottom-1"
+                          />
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
                 </div>
 
                 <Button
