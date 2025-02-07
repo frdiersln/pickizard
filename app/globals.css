@@ -5,19 +5,19 @@
 @layer base {
   :root {
     /* Brand Colors */
-    --primary: #FFFAAF;
-    --primary-foreground: #493D9E;
+    --primary: 60 100% 84%; /* #FFFAAF in HSL */
+    --primary-foreground: 246 45% 43%; /* #493D9E in HSL */
 
-    --secondary: #DADFFF;
-    --secondary-foreground: #493D9E;
+    --secondary: 234 100% 93%; /* #DADFFF in HSL */
+    --secondary-foreground: 246 45% 43%; /* #493D9E in HSL */
 
-    --background: #493D9E;
-    --background-secondary: #B2A5FF;
+    --background: 246 45% 43%; /* #493D9E in HSL */
+    --background-secondary: 252 100% 82%; /* #B2A5FF in HSL */
     --foreground: 0 0% 0%;
 
     /* shadcn Required Colors */
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
+    --card: 252 100% 82%; /* #B2A5FF in HSL */
+    --card-foreground: 246 45% 43%; /* #493D9E in HSL */
 
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 3.9%;
@@ -62,6 +62,6 @@ html {
 }
 
 body {
-  background-color: var(--background);
-  color: var(--primary);
+  background-color: hsl(var(--background));
+  color: hsl(var(--primary));
 }
