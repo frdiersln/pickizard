@@ -1,9 +1,10 @@
 "use client"
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X } from 'lucide-react';
+import { X, ListPlus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Slider } from "@/components/ui/slider"
+import { Card, CardContent } from '@/components/ui/card';
 import { ListItem } from '@/types';
 
 interface ListDisplayProps {
@@ -13,6 +14,17 @@ interface ListDisplayProps {
 
 export function ListDisplay({ items, onRemoveItem }: ListDisplayProps) {
   const [size, setSize] = useState(3); // Default middle size (1-5)
+
+  if (items.length === 0) {
+    return (
+      <Card className="w-full h-[300px] flex items-center justify-center">
+        <CardContent className="flex flex-col items-center gap-4">
+          <ListPlus className="h-12 w-12" />
+          <p className="text-lg">Add items to your list to get started</p>
+        </CardContent>
+      </Card>
+    );
+  }
 
   const gridSizeClasses = {
     1: "grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6",
