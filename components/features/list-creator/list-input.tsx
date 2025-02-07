@@ -113,7 +113,7 @@ export default function ListInput({ items, setItems }: ListInputProps) {
             )}
           </Button>
           <Button type="submit" 
-          className="relative bg-background-secondary hover:bg-background-secondary hover:shadow-[0_0_20px_rgba(255,250,175,0.6)] hover:border hover:border-[#FFFAAF]/50 transition-all duration-300"
+          className="relative text-background bg-primary hover:bg-primary hover:shadow-[0_0_20px_rgba(255,250,175,0.6)] hover:border hover:border-[#FFFAAF]/50 transition-all duration-300"
           >
             <Plus className="w-4 h-4" />
             Add
