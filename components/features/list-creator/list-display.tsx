@@ -1,10 +1,15 @@
-"use client"
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ListPlus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Slider } from "@/components/ui/slider"
+import { Slider } from "@/components/ui/slider";
 import { Card, CardContent } from '@/components/ui/card';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { ListItem } from '@/types';
 
 interface ListDisplayProps {
@@ -13,7 +18,7 @@ interface ListDisplayProps {
 }
 
 export function ListDisplay({ items, onRemoveItem }: ListDisplayProps) {
-  const [size, setSize] = useState(3); // Default middle size (1-5)
+  const [size, setSize] = useState(3);
 
   if (items.length === 0) {
     return (
@@ -63,14 +68,13 @@ export function ListDisplay({ items, onRemoveItem }: ListDisplayProps) {
               className="relative group aspect-square"
             >
               <div className="relative w-full h-full rounded-lg overflow-hidden">
-                {/* Image Container */}
                 <div className="w-full h-full p-4 bg-background-secondary">
                   {item.imageUrl ? (
                     <img
                       src={item.imageUrl}
                       alt={item.name}
                       className="w-full h-full rounded-sm object-cover"
-                      />
+                    />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center rounded-sm bg-gray-200">
                       <span className="text-gray-400">No Image</span>
@@ -78,20 +82,27 @@ export function ListDisplay({ items, onRemoveItem }: ListDisplayProps) {
                   )}
                 </div>
 
-                {/* Overlay with name */}
-                <div className="absolute inset-x-0 bottom-0 w-fit h-fit mx-auto bg-background-secondary rounded-t-xl px-4">
-                  <h3 className="text-primary text-center text-4xl truncate">
-                    {item.name}
-                  </h3>
+                <div className="absolute inset-x-0 bottom-0 max-w-[60%] w-fit h-fit mx-auto bg-background-secondary rounded-t-xl px-4">
+                  <TooltipProvider delayDuration={0}>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <h3 className="text-primary text-center text-4xl max-w-full truncate">
+                          {item.name}
+                        </h3>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p className="text-sm whitespace-normal">{item.name}</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                 </div>
 
-                {/* Delete Button */}
                 <Button
                   onClick={() => onRemoveItem(item.id)}
                   variant="destructive"
                   size="icon"
                   className="absolute top-2 right-2 h-8 w-8 opacity-80"
-                  >
+                >
                   <X className="w-4 h-4" />
                 </Button>
               </div>
