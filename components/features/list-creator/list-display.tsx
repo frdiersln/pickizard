@@ -63,7 +63,20 @@ export function ListDisplay({ items, onRemoveItem }: ListDisplayProps) {
               className="relative group aspect-square"
             >
               <div className="relative w-full h-full rounded-lg overflow-hidden">
-                <div className="w-full h-full p-2 sm:p-4 bg-background-secondary">
+                <div 
+                  className="w-full h-full p-2 sm:p-4 bg-background-secondary"
+                  // Show tooltip on hover or touch
+                  onMouseEnter={() => setActiveTooltip(item.id)}
+                  onMouseLeave={() => setActiveTooltip(null)}
+                  onTouchStart={(e) => {
+                    e.preventDefault(); // Prevent double-tap zoom on mobile
+                    if (activeTooltip === item.id) {
+                      setActiveTooltip(null);
+                    } else {
+                      setActiveTooltip(item.id);
+                    }
+                  }}
+                >
                   {item.imageUrl ? (
                     <img
                       src={item.imageUrl}
@@ -79,19 +92,7 @@ export function ListDisplay({ items, onRemoveItem }: ListDisplayProps) {
 
                 <div className="absolute inset-x-0 bottom-0 max-w-[60%] w-fit h-fit mx-auto bg-background-secondary rounded-t-xl px-4">
                   <div className="relative flex justify-center">
-                    <h3 
-                      className="text-primary text-center text-2xl max-w-full truncate"
-                      onMouseEnter={() => setActiveTooltip(item.id)}
-                      onMouseLeave={() => setActiveTooltip(null)}
-                      onTouchStart={(e) => {
-                        e.preventDefault(); // Prevent double-tap zoom on mobile
-                        if (activeTooltip === item.id) {
-                          setActiveTooltip(null);
-                        } else {
-                          setActiveTooltip(item.id);
-                        }
-                      }}
-                    >
+                    <h3 className="text-primary text-center text-2xl max-w-full truncate">
                       {item.name}
                     </h3>
                     
