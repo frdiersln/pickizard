@@ -1,7 +1,7 @@
 "use client"
 import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Plus, X, Upload } from 'lucide-react';
+import { Plus, X, ImagePlus, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ListItem } from '@/types';
@@ -13,23 +13,38 @@ interface ListInputProps {
 
 export default function ListInput({ items, setItems }: ListInputProps) {
   const [currentName, setCurrentName] = useState('');
+  // eslint-disable-next-line
   const [currentImage, setCurrentImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string>('');
   const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    // Create a URL for the image preview
-    const imageUrl = URL.createObjectURL(file);
-    setImagePreview(imageUrl);
-    setCurrentImage(file);
-  };
-
+  
+  const [isLoading, setIsLoading] = useState(false);
   const handleUploadClick = () => {
+    setIsLoading(true);
     fileInputRef.current?.click();
   };
+
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    
+    try {
+      // Create a promise to simulate/handle the image loading
+      await new Promise((resolve) => {
+        const img = new Image();
+        img.src = URL.createObjectURL(file);
+        img.onload = resolve;
+      });  
+
+      const imageUrl = URL.createObjectURL(file);
+      setImagePreview(imageUrl);
+      setCurrentImage(file);
+    } catch (error) {
+      console.error('Error loading image:', error);
+    } finally {
+      setIsLoading(false);
+    }  
+  };  
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,6 +67,7 @@ export default function ListInput({ items, setItems }: ListInputProps) {
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
+    document.getElementById('name-input')?.focus();
   };
 
   const removeImage = () => {
@@ -70,6 +86,7 @@ export default function ListInput({ items, setItems }: ListInputProps) {
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="flex gap-4">
           <Input
+            id="name-input"
             type="text"
             value={currentName}
             onChange={(e) => setCurrentName(e.target.value)}
@@ -87,12 +104,18 @@ export default function ListInput({ items, setItems }: ListInputProps) {
             type="button"
             variant="outline"
             onClick={handleUploadClick}
+            disabled={isLoading}
           >
-            <Upload className="w-4 h-4 mr-2" />
-            Upload
+            {isLoading ? (
+              <Loader2 className="w-fit h-4 animate-spin" />
+            ) : (
+              <ImagePlus className="w-fit h-4" />
+            )}
           </Button>
-          <Button type="submit">
-            <Plus className="w-4 h-4 mr-2" />
+          <Button type="submit" 
+          className="relative bg-background-secondary hover:bg-background-secondary hover:shadow-[0_0_20px_rgba(255,250,175,0.6)] hover:border hover:border-[#FFFAAF]/50 transition-all duration-300"
+          >
+            <Plus className="w-4 h-4" />
             Add
           </Button>
         </div>
