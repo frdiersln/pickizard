@@ -63,7 +63,7 @@ export function ListDisplay({ items, onRemoveItem }: ListDisplayProps) {
               className="relative group aspect-square"
             >
               <div className="relative w-full h-full rounded-lg overflow-hidden">
-                <div className="w-full h-full p-4 bg-background-secondary">
+                <div className="w-full h-full p-2 sm:p-4 bg-background-secondary">
                   {item.imageUrl ? (
                     <img
                       src={item.imageUrl}
