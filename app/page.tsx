@@ -11,6 +11,10 @@ export default function Home() {
     setItems(items.filter(item => item.id !== id));
   };
 
+  const handleReorder = (newItems: ListItem[]) => {
+    setItems(newItems);
+  };
+
   return (
     <main>
       <div className="container mx-auto w-[90%] md:w-1/2">
@@ -21,7 +25,11 @@ export default function Home() {
           <ListInput items={items} setItems={setItems} />
         </div>
         <div className="section my-6">
-          <ListDisplay items={items} onRemoveItem={handleRemoveItem} />  
+          <ListDisplay 
+            items={items} 
+            onRemoveItem={handleRemoveItem} 
+            onReorderItems={handleReorder}
+          />        
         </div>
       </div>
     </main>
