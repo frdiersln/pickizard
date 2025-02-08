@@ -74,12 +74,12 @@ export function ListDisplay({ items, onRemoveItem, onReorderItems }: ListDisplay
                 onMouseLeave={() => setActiveTooltip(null)}
               >
                 {/* Reorder Controls - Redesigned */}
-                <div className="absolute left-2 top-2 z-10 flex flex-col gap-1">
+                <div className="absolute left-0 top-0 z-10 flex flex-col h-full justify-between">
                   <Button
                     onClick={() => moveItem(index, 'up')}
                     variant="secondary"
                     size="icon"
-                    className="h-5 w-5 bg-white/60 backdrop-blur-sm hover:bg-white/80"
+                    className="h-5 w-5 bg-white/60 backdrop-blur-sm hover:bg-white/80 rounded-bl-none rounded-tr-none"
                     disabled={index === 0}
                   >
                     <ChevronUp className="h-3 w-3" />
@@ -88,7 +88,7 @@ export function ListDisplay({ items, onRemoveItem, onReorderItems }: ListDisplay
                     onClick={() => moveItem(index, 'down')}
                     variant="secondary"
                     size="icon"
-                    className="h-5 w-5 bg-white/60 backdrop-blur-sm hover:bg-white/80"
+                    className="h-5 w-5 bg-white/60 backdrop-blur-sm hover:bg-white/80 rounded-br-none rounded-tl-none"
                     disabled={index === items.length - 1}
                   >
                     <ChevronDown className="h-3 w-3" />
@@ -126,7 +126,7 @@ export function ListDisplay({ items, onRemoveItem, onReorderItems }: ListDisplay
                 onClick={() => onRemoveItem(item.id)}
                 variant="destructive"
                 size="icon"
-                className="absolute top-2 right-2 h-6 w-6 opacity-80 hover:opacity-100"
+                className="absolute top-0 right-0 h-6 w-6 opacity-80 hover:opacity-100 rounded-br-none rounded-tl-none"
               >
                 <X className="h-3 w-3" />
               </Button>
