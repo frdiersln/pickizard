@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, ListPlus, ChevronUp, ChevronDown } from 'lucide-react';
+import { X, ListPlus, ChevronUp, ChevronDown, Wand2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Slider } from "@/components/ui/slider";
 import { Card, CardContent } from '@/components/ui/card';
@@ -9,9 +9,15 @@ interface ListDisplayProps {
   items: ListItem[];
   onRemoveItem: (id: string) => void;
   onReorderItems: (newItems: ListItem[]) => void;
+  onStartComparison: () => void;
 }
 
-export function ListDisplay({ items, onRemoveItem, onReorderItems }: ListDisplayProps) {
+export function ListDisplay({ 
+  items, 
+  onRemoveItem, 
+  onReorderItems,
+  onStartComparison 
+}: ListDisplayProps) {
   const [size, setSize] = useState(3);
   const [activeTooltip, setActiveTooltip] = useState<string | null>(null);
 
@@ -45,7 +51,16 @@ export function ListDisplay({ items, onRemoveItem, onReorderItems }: ListDisplay
 
   return (
     <div className="space-y-6 rounded-lg p-2">
-      <div className="flex items-center gap-4">
+      <Button
+        onClick={onStartComparison}
+        disabled={items.length < 3}
+        className="bg-primary w-full text-primary-foreground hover:bg-primary hover:scale-105 shadow-[0_0_20px_rgba(255,250,175,0.6)] border border-[#FFFAAF]/50 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+      >
+        <Wand2 className="mr-2 h-4 w-4" />
+        Lets Pick!
+      </Button>
+
+      <div className="flex items-center justify-between gap-4">
         <div className="sliderWrapper flex w-fit max-w-full">
           <span className="text-xs mt-1 text-muted-foreground">Smaller</span>
           <Slider
@@ -58,7 +73,7 @@ export function ListDisplay({ items, onRemoveItem, onReorderItems }: ListDisplay
             className="w-[300px] max-w-full mx-2"
           />
           <span className="text-md text-muted-foreground">Larger</span>
-        </div>
+        </div>        
       </div>
 
       <div className={`grid ${gridSizeClasses} gap-4`}>

@@ -25,11 +25,14 @@ export default function Home() {
           <ListInput items={items} setItems={setItems} />
         </div>
         <div className="section my-6">
-          <ListDisplay 
-            items={items} 
-            onRemoveItem={handleRemoveItem} 
+          <ListDisplay
+            items={items}
+            onRemoveItem={handleRemoveItem}
             onReorderItems={handleReorder}
-          />        
+            onStartComparison={() => {
+              // Handle comparison phase start
+            }}
+          />
         </div>
       </div>
     </main>
