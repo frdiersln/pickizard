@@ -44,8 +44,17 @@
   * {
     @apply border-border;
   }
+  html {
+    overflow: hidden;
+    height: 100%;
+    overscroll-behavior: none;
+  }
   body {
     @apply bg-background text-foreground;
+    height: 100%;
+    overflow: auto;
+    overscroll-behavior: none;
+    -webkit-tap-highlight-color: transparent;
   }
 }
 

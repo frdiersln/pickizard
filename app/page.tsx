@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import ListInput from '@/components/features/list-creator/list-input';
 import { ListDisplay } from '@/components/features/list-creator/list-display';
+import { ComparisonModal } from '@/components/features/decision-process/comparison-view';
 import { ListItem } from '@/types';
 
 export default function Home() {
@@ -15,8 +16,29 @@ export default function Home() {
     setItems(newItems);
   };
 
+  const [isComparisonOpen, setIsComparisonOpen] = useState(false);
+  const [currentPair, setCurrentPair] = useState<[ListItem, ListItem] | null>(null);
+
+  const handleStartComparison = () => {
+    // Set initial pair
+    setCurrentPair([items[0], items[1]]);
+    setIsComparisonOpen(true);
+  };
+
+  const handleComparisonSelect = (selectedId: string) => {
+    // Handle the selection and set next pair
+    // Add your comparison logic here
+  };
+
   return (
     <main>
+      <ComparisonModal
+        isOpen={isComparisonOpen}
+        onClose={() => setIsComparisonOpen(false)}
+        items={items}
+        currentPair={currentPair!}
+        onSelect={handleComparisonSelect}
+      />
       <div className="container mx-auto w-[90%] md:w-1/2">
         <div className="section text-center my-6">
           <h1>Hello Pickizard!</h1>
@@ -29,9 +51,7 @@ export default function Home() {
             items={items}
             onRemoveItem={handleRemoveItem}
             onReorderItems={handleReorder}
-            onStartComparison={() => {
-              // Handle comparison phase start
-            }}
+            onStartComparison={handleStartComparison}
           />
         </div>
       </div>
