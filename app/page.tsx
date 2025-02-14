@@ -57,7 +57,7 @@ export default function Home() {
             onStartComparison={handleStartComparison}
           />
         </div>
-        <div className="section my-6">
+        <div className="section my-6" id='resultSection'>
           {selectedWinner && <ResultDisplay winner={{ ...selectedWinner, imageUrl: selectedWinner.imageUrl || '' }} />}
         </div>
       </div>

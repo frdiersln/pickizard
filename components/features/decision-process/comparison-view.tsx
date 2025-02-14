@@ -57,6 +57,10 @@ export function ComparisonModal({
         onSelect(selectedId);
         onClose(); // Close the modal
         setCurrentIndex(2); // reset the comparison phase for next time
+        const resultSection = document.getElementById('resultSection');
+        if (resultSection) {
+          resultSection.scrollIntoView({ behavior: 'smooth' });
+        }
       }
       
       setSelectedItem(null);
