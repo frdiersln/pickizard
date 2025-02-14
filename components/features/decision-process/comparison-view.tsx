@@ -85,7 +85,7 @@ export function ComparisonModal({
         <X className="w-6 h-6" />
       </Button>
 
-      <div className="relative h-[90dvh] w-[89dvw] flex items-center justify-center m-auto mt-[5dvh] touch-auto">
+      <div className="relative h-[66dvh] w-[89dvw] flex items-center justify-center m-auto mt-[17dvh] touch-auto">
         <Card 
           className="relative w-full max-w-7xl bg-transparent border-none touch-auto"
           onClick={handleContentClick}
