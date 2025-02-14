@@ -104,11 +104,17 @@ export default function ResultDisplay({ winner }: ResultDisplayProps) {
             animate="animate"
           >
             <div className="relative w-full h-full rounded-lg overflow-hidden">
+            {winner.imageUrl ? (
               <img 
                 src={winner.imageUrl} 
                 alt={winner.name} 
                 className="w-full object-cover rounded-lg"
               />
+            ) : (
+              <div className="w-full aspect-[5/3] flex items-center justify-center bg-gray-100">
+                <span className="text-gray-400">No Image</span>
+              </div>
+            )}
               <motion.div 
                 className="absolute bottom-0 left-0 right-0 px-4 py-6 bg-gradient-to-t from-background/60 to-transparent"
                 initial={{ opacity: 0, y: 20 }}
