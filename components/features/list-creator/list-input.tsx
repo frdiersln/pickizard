@@ -1,6 +1,5 @@
 "use client"
 import React, { useState, useRef } from 'react';
-import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Plus, X, ImagePlus, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -14,12 +13,11 @@ interface ListInputProps {
 
 export default function ListInput({ items, setItems }: ListInputProps) {
   const [currentName, setCurrentName] = useState('');
-  // eslint-disable-next-line
   const [currentImage, setCurrentImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string>('');
   const fileInputRef = useRef<HTMLInputElement>(null);
-  
   const [isLoading, setIsLoading] = useState(false);
+  
   const handleUploadClick = () => {
     setIsLoading(true);
     fileInputRef.current?.click();
@@ -30,13 +28,6 @@ export default function ListInput({ items, setItems }: ListInputProps) {
     if (!file) return;
     
     try {
-      // Create a promise to simulate/handle the image loading
-      await new Promise((resolve) => {
-        const img = new HTMLImageElement();
-        img.src = URL.createObjectURL(file);
-        img.onload = resolve;
-      });  
-
       const imageUrl = URL.createObjectURL(file);
       setImagePreview(imageUrl);
       setCurrentImage(file);
@@ -44,8 +35,8 @@ export default function ListInput({ items, setItems }: ListInputProps) {
       console.error('Error loading image:', error);
     } finally {
       setIsLoading(false);
-    }  
-  };  
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -113,8 +104,9 @@ export default function ListInput({ items, setItems }: ListInputProps) {
               <ImagePlus className="w-fit h-4" />
             )}
           </Button>
-          <Button type="submit" 
-          className="relative text-background bg-secondary hover:bg-secondary"
+          <Button 
+            type="submit" 
+            className="relative text-background bg-secondary hover:bg-secondary"
           >
             <Plus className="w-4 h-4" />
             Add
@@ -127,7 +119,8 @@ export default function ListInput({ items, setItems }: ListInputProps) {
             animate={{ opacity: 1, scale: 1 }}
             className="relative w-24 h-24"
           >
-            <Image
+            {/* Using regular img tag instead of Next.js Image for blob URL support */}
+            <img
               src={imagePreview}
               alt="Preview"
               className="w-full h-full object-cover rounded-lg border border-gray-200"

@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import Image from 'next/image';
 import { Card } from '@/components/ui/card';
 import { X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -160,7 +159,7 @@ function ComparisonItem({ item, onSelect, direction }: ComparisonItemProps) {
       <div className="relative aspect-square rounded-xl overflow-hidden transition-all duration-300 
         hover:scale-105 hover:shadow-xl border-2 border-transparent hover:border-primary">
         {item.imageUrl ? (
-          <Image
+          <img
             src={item.imageUrl}
             alt={item.name}
             className="w-full h-full object-cover"

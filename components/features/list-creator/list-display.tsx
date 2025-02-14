@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Image from 'next/image';
 import { X, ListPlus, ChevronUp, ChevronDown, Wand2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Slider } from "@/components/ui/slider";
@@ -112,7 +111,7 @@ export function ListDisplay({
                 </div>
 
                 {item.imageUrl ? (
-                  <Image
+                  <img
                     src={item.imageUrl}
                     alt={item.name}
                     className="w-full h-full rounded-sm object-cover"
