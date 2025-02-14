@@ -29,10 +29,8 @@ export default function Home() {
   const [selectedWinner, setSelectedWinner] = useState<ListItem | null>(null);
 
   const handleComparisonSelect = (selectedId: string) => {
-    // This will be called every time a selection is made
-    // checking if it's the final selection by checking the currentIndex
     const winner = items.find(item => item.id === selectedId);
-    setSelectedWinner(winner || null);
+    setSelectedWinner(winner || null );
   };
 
   return (
@@ -60,7 +58,7 @@ export default function Home() {
           />
         </div>
         <div className="section my-6">
-          <ResultDisplay winner={selectedWinner} />
+          {selectedWinner && <ResultDisplay winner={{ ...selectedWinner, imageUrl: selectedWinner.imageUrl || '' }} />}
         </div>
       </div>
     </main>
