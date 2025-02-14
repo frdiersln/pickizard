@@ -1,5 +1,6 @@
 "use client"
 import React, { useState, useRef } from 'react';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Plus, X, ImagePlus, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -31,7 +32,7 @@ export default function ListInput({ items, setItems }: ListInputProps) {
     try {
       // Create a promise to simulate/handle the image loading
       await new Promise((resolve) => {
-        const img = new Image();
+        const img = new HTMLImageElement();
         img.src = URL.createObjectURL(file);
         img.onload = resolve;
       });  
@@ -126,7 +127,7 @@ export default function ListInput({ items, setItems }: ListInputProps) {
             animate={{ opacity: 1, scale: 1 }}
             className="relative w-24 h-24"
           >
-            <img
+            <Image
               src={imagePreview}
               alt="Preview"
               className="w-full h-full object-cover rounded-lg border border-gray-200"
