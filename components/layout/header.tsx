@@ -1,6 +1,4 @@
 "use client"
-// components/layout/header.tsx
-// components/layout/header.tsx
 import React, { useState } from 'react'
 import Link from 'next/link'
 import { Menu, X } from 'lucide-react'
