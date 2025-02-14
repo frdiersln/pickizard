@@ -59,7 +59,7 @@ export function ComparisonModal({
         setCurrentIndex(2); // reset the comparison phase for next time
         const resultSection = document.getElementById('resultSection');
         if (resultSection) {
-          resultSection.scrollIntoView({ behavior: 'smooth' });
+          resultSection.scrollIntoView({ behavior: 'smooth', block: 'end' });
         }
       }
       
