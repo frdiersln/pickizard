@@ -3,6 +3,7 @@ import { useState } from 'react';
 import ListInput from '@/components/features/list-creator/list-input';
 import { ListDisplay } from '@/components/features/list-creator/list-display';
 import { ComparisonModal } from '@/components/features/decision-process/comparison-view';
+import ResultDisplay from '@/components/features/decision-process/result-display';
 import { ListItem } from '@/types';
 
 export default function Home() {
@@ -25,9 +26,13 @@ export default function Home() {
     setIsComparisonOpen(true);
   };
 
+  const [selectedWinner, setSelectedWinner] = useState<ListItem | null>(null);
+
   const handleComparisonSelect = (selectedId: string) => {
-    // Handle the selection and set next pair
-    // Add your comparison logic here
+    // This will be called every time a selection is made
+    // checking if it's the final selection by checking the currentIndex
+    const winner = items.find(item => item.id === selectedId);
+    setSelectedWinner(winner || null);
   };
 
   return (
@@ -53,6 +58,9 @@ export default function Home() {
             onReorderItems={handleReorder}
             onStartComparison={handleStartComparison}
           />
+        </div>
+        <div className="section my-6">
+          <ResultDisplay winner={selectedWinner} />
         </div>
       </div>
     </main>
