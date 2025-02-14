@@ -157,7 +157,7 @@ function ComparisonItem({ item, onSelect, direction }: ComparisonItemProps) {
       className="w-full h-full group"
     >
       <div className="relative aspect-square rounded-xl overflow-hidden transition-all duration-300 
-        hover:scale-105 hover:shadow-xl border-2 border-transparent hover:border-[#FFFAAF]">
+        hover:scale-105 hover:shadow-xl border-2 border-transparent hover:border-primary">
         {item.imageUrl ? (
           <img
             src={item.imageUrl}
@@ -170,9 +170,8 @@ function ComparisonItem({ item, onSelect, direction }: ComparisonItemProps) {
           </div>
         )}
         
-        {/* Hover Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent 
-          opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent">
           <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
             <p className="text-xl font-semibold text-center">{item.name}</p>
           </div>
