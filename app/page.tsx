@@ -1,13 +1,22 @@
 "use client"
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ListInput from '@/components/features/list-creator/list-input';
 import { ListDisplay } from '@/components/features/list-creator/list-display';
 import { ComparisonModal } from '@/components/features/decision-process/comparison-view';
 import ResultDisplay from '@/components/features/decision-process/result-display';
+import AnimatedSection from '@/components/animated-section';
 import { ListItem } from '@/types';
 
 export default function Home() {
   const [items, setItems] = useState<ListItem[]>([]);
+  const [isComparisonOpen, setIsComparisonOpen] = useState(false);
+  const [currentPair, setCurrentPair] = useState<[ListItem, ListItem] | null>(null);
+  const [selectedWinner, setSelectedWinner] = useState<ListItem | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleRemoveItem = (id: string) => {
     setItems(items.filter(item => item.id !== id));
@@ -17,21 +26,19 @@ export default function Home() {
     setItems(newItems);
   };
 
-  const [isComparisonOpen, setIsComparisonOpen] = useState(false);
-  const [currentPair, setCurrentPair] = useState<[ListItem, ListItem] | null>(null);
-
   const handleStartComparison = () => {
-    // Set initial pair
     setCurrentPair([items[0], items[1]]);
     setIsComparisonOpen(true);
   };
 
-  const [selectedWinner, setSelectedWinner] = useState<ListItem | null>(null);
-
   const handleComparisonSelect = (selectedId: string) => {
     const winner = items.find(item => item.id === selectedId);
-    setSelectedWinner(winner || null );
+    setSelectedWinner(winner || null);
   };
+
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <main>
@@ -43,25 +50,28 @@ export default function Home() {
         onSelect={handleComparisonSelect}
       />
       <div className="container mx-auto w-[90%] md:w-1/2">
-        <div className="section text-center my-6">
+        <AnimatedSection delay={0.2} className="section text-center my-6" key="intro">
           <h1 className="text-md text-secondary font-bold">How To Work?</h1>
           <p className="text-secondary">Enter your options with image (optional) and let the Pickizard help you decide.</p>
-        </div>
-        <div className="section my-6">
+        </AnimatedSection>
+
+        <AnimatedSection delay={0.4} className="section my-6" key="input">
           <ListInput items={items} setItems={setItems} />
-        </div>
-        <div className="section my-6">
+        </AnimatedSection>
+
+        <AnimatedSection delay={0.6} className="section my-6" key="display">
           <ListDisplay
             items={items}
             onRemoveItem={handleRemoveItem}
             onReorderItems={handleReorder}
             onStartComparison={handleStartComparison}
           />
-        </div>
-        <div className="section my-6" id='resultSection'>
+        </AnimatedSection>
+
+        <AnimatedSection delay={0.8} className="section my-6" key="result" id='resultSection'>
           {selectedWinner && <ResultDisplay winner={{ ...selectedWinner, imageUrl: selectedWinner.imageUrl || '' }} />}
-        </div>
+        </AnimatedSection>
       </div>
     </main>
-  )
+  );
 }
