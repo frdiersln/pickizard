@@ -44,7 +44,8 @@ export default function Home() {
       />
       <div className="container mx-auto w-[90%] md:w-1/2">
         <div className="section text-center my-6">
-          <h1>Hello Pickizard!</h1>
+          <h1 className="text-md font-bold">How To Work?</h1>
+          <p className="text-secondary">Enter your options with image (optional) and let the Pickizard help you decide.</p>
         </div>
         <div className="section my-6">
           <ListInput items={items} setItems={setItems} />
