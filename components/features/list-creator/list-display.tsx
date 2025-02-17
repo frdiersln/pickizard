@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { X, ListPlus, ChevronUp, ChevronDown, Wand2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Slider } from "@/components/ui/slider";
 import { Card, CardContent } from '@/components/ui/card';
-import { ListItem } from '@/types';
+import { ListItem } from '@/types/index';
 
 interface ListDisplayProps {
   items: ListItem[];
   onRemoveItem: (id: string) => void;
-  onReorderItems: (newItems: ListItem[]) => void;
+  onReorderItems: (items: ListItem[]) => void;
   onStartComparison: () => void;
 }
 
@@ -77,77 +78,86 @@ export function ListDisplay({
       </div>
 
       <div className={`grid ${gridSizeClasses} gap-4`}>
-        {items.map((item, index) => (
-          <div
-            key={item.id}
-            className="relative group aspect-square"
-          >
-            <div className="relative w-full h-full rounded-lg overflow-hidden">
-              <div 
-                className="w-full h-full p-2 sm:p-4 bg-background-secondary"
-                onMouseEnter={() => setActiveTooltip(item.id)}
-                onMouseLeave={() => setActiveTooltip(null)}
-              >
-                {/* Reorder Controls - Redesigned */}
-                <div className="absolute left-0 top-0 z-10 flex flex-col h-full justify-between">
-                  <Button
-                    onClick={() => moveItem(index, 'up')}
-                    variant="secondary"
-                    size="icon"
-                    className="h-5 w-5 bg-white/60 backdrop-blur-sm hover:bg-white/80 rounded-bl-none rounded-tr-none"
-                    disabled={index === 0}
-                  >
-                    <ChevronUp className="h-3 w-3" />
-                  </Button>
-                  <Button
-                    onClick={() => moveItem(index, 'down')}
-                    variant="secondary"
-                    size="icon"
-                    className="h-5 w-5 bg-white/60 backdrop-blur-sm hover:bg-white/80 rounded-br-none rounded-tl-none"
-                    disabled={index === items.length - 1}
-                  >
-                    <ChevronDown className="h-3 w-3" />
-                  </Button>
-                </div>
-
-                {item.imageUrl ? (
-                  <img
-                    src={item.imageUrl}
-                    alt={item.name}
-                    className="w-full h-full rounded-sm object-cover"
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center rounded-sm bg-gray-200">
-                    <span className="text-gray-400">No Image</span>
+        <AnimatePresence mode="popLayout">
+          {items.map((item, index) => (
+            <motion.div
+              key={item.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{
+                duration: 0.3,
+                ease: "easeOut"
+              }}
+              className="relative group aspect-square"
+            >
+              <div className="relative w-full h-full rounded-lg overflow-hidden">
+                <div 
+                  className="w-full h-full p-2 sm:p-4 bg-background-secondary"
+                  onMouseEnter={() => setActiveTooltip(item.id)}
+                  onMouseLeave={() => setActiveTooltip(null)}
+                >
+                  {/* Reorder Controls */}
+                  <div className="absolute left-0 top-0 z-10 flex flex-col h-full justify-between">
+                    <Button
+                      onClick={() => moveItem(index, 'up')}
+                      variant="secondary"
+                      size="icon"
+                      className="h-5 w-5 bg-white/60 backdrop-blur-sm hover:bg-white/80 rounded-bl-none rounded-tr-none"
+                      disabled={index === 0}
+                    >
+                      <ChevronUp className="h-3 w-3" />
+                    </Button>
+                    <Button
+                      onClick={() => moveItem(index, 'down')}
+                      variant="secondary"
+                      size="icon"
+                      className="h-5 w-5 bg-white/60 backdrop-blur-sm hover:bg-white/80 rounded-br-none rounded-tl-none"
+                      disabled={index === items.length - 1}
+                    >
+                      <ChevronDown className="h-3 w-3" />
+                    </Button>
                   </div>
-                )}
-              </div>
 
-              <div className="absolute inset-x-0 bottom-0 max-w-[60%] w-fit h-fit mx-auto bg-background-secondary rounded-t-xl px-4">
-                <div className="relative flex justify-center">
-                  <h3 className="text-primary text-center text-xl max-w-full truncate py-2">
-                    {item.name}
-                  </h3>
-                  
-                  {activeTooltip === item.id && item.name.length > 15 && (
-                    <div className="absolute z-50 bottom-full -translate-x-1/2 mb-2 px-3 py-1.5 rounded-md bg-popover text-popover-foreground text-sm shadow-md">
-                      {item.name}
+                  {item.imageUrl ? (
+                    <img
+                      src={item.imageUrl}
+                      alt={item.name}
+                      className="w-full h-full rounded-sm object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center rounded-sm bg-gray-200">
+                      <span className="text-gray-400">No Image</span>
                     </div>
                   )}
                 </div>
-              </div>
 
-              <Button
-                onClick={() => onRemoveItem(item.id)}
-                variant="destructive"
-                size="icon"
-                className="absolute top-0 right-0 h-6 w-6 opacity-80 hover:opacity-100 rounded-br-none rounded-tl-none"
-              >
-                <X className="h-3 w-3" />
-              </Button>
-            </div>
-          </div>
-        ))}
+                <div className="absolute inset-x-0 bottom-0 max-w-[60%] w-fit h-fit mx-auto bg-background-secondary rounded-t-xl px-4">
+                  <div className="relative flex justify-center">
+                    <h3 className="text-primary text-center text-xl max-w-full truncate py-2">
+                      {item.name}
+                    </h3>
+                    
+                    {activeTooltip === item.id && item.name.length > 15 && (
+                      <div className="absolute z-50 bottom-full -translate-x-1/2 mb-2 px-3 py-1.5 rounded-md bg-popover text-popover-foreground text-sm shadow-md">
+                        {item.name}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <Button
+                  onClick={() => onRemoveItem(item.id)}
+                  variant="destructive"
+                  size="icon"
+                  className="absolute top-0 right-0 h-6 w-6 opacity-80 hover:opacity-100 rounded-br-none rounded-tl-none"
+                >
+                  <X className="h-3 w-3" />
+                </Button>
+              </div>
+            </motion.div>
+          ))}
+        </AnimatePresence>
       </div>
     </div>
   );
