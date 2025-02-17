@@ -50,6 +50,9 @@ export default function Home() {
         onSelect={handleComparisonSelect}
       />
       <div className="container mx-auto w-[90%] md:w-1/2">
+        <AnimatedSection delay={0} className='section my-6 flex justify-center' key="buy-me-coffee">
+          <a target="_blank" href="https://www.buymeacoffee.com/ferdieraslan"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=ferdieraslan&button_colour=BD5FFF&font_colour=ffffff&font_family=Bree&outline_colour=000000&coffee_colour=FFDD00" /></a>
+        </AnimatedSection>
         <AnimatedSection delay={0.2} className="section text-center my-6" key="intro">
           <h1 className="text-md text-secondary font-bold">How To Work?</h1>
           <p className="text-secondary">Enter your options with image (optional) and let the Pickizard help you decide.</p>
