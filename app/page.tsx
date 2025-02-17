@@ -50,7 +50,7 @@ export default function Home() {
         onSelect={handleComparisonSelect}
       />
       <div className="container mx-auto w-[90%] md:w-1/2">
-        <AnimatedSection delay={0} className='section my-6 flex justify-center' key="buy-me-coffee">
+        <AnimatedSection delay={0.1} className='section my-6 flex justify-center' key="buy-me-coffee">
           <a target="_blank" href="https://www.buymeacoffee.com/ferdieraslan"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=ferdieraslan&button_colour=BD5FFF&font_colour=ffffff&font_family=Bree&outline_colour=000000&coffee_colour=FFDD00" /></a>
         </AnimatedSection>
         <AnimatedSection delay={0.2} className="section text-center my-6" key="intro">
@@ -62,7 +62,7 @@ export default function Home() {
           <ListInput items={items} setItems={setItems} />
         </AnimatedSection>
 
-        <AnimatedSection delay={0.6} className="section my-6" key="display">
+        <AnimatedSection delay={0.8} className="section my-6" key="display">
           <ListDisplay
             items={items}
             onRemoveItem={handleRemoveItem}
